@@ -25,3 +25,6 @@ class PlayerClass:
             self.hand.pop(card_index)
             self.fieldCardCount[field_index] += 1
             self.fieldSum[field_index] += card.attack
+            
+            # Invoke the card's function
+            card.useCard(field_index, self)
