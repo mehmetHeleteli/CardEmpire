@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
 
 # C extensions
 *.so
@@ -35,6 +36,14 @@ MANIFEST
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+
+# Ignore IDE-specific files
+.idea/
+.vscode/
+
+# Ignore virtual environment directories
+venv/
+env/
 
 # Unit test / coverage reports
 htmlcov/
