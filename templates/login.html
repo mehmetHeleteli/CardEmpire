@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      form {
+        margin-top: 50px;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+      }
+
+      input[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Login</h1>
+    <form action="/chat" method="POST">
+      <input
+        type="text"
+        name="nickname"
+        id="nickname-input"
+        placeholder="Enter your nickname"
+        autocomplete="off"
+        required
+      />
+      <input type="submit" value="Start Chatting" />
+    </form>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("nickname-input").focus();
+      });
+    </script>
+  </body>
+</html>

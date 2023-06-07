@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      /* Add your CSS styles here */
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 16px;
+      }
+
+      #command {
+        position: fixed;
+        bottom: 10px;
+        left: 48%;
+        transform: translateX(-50%);
+        width: 51%; /* Adjust the width as needed */
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 18px;
+      }
+
+      #send {
+        position: fixed;
+        bottom: 27px;
+        left: 74.8%;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      #server-responses {
+        padding: 10px;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        max-height: auto;
+        overflow-y: scroll;
+        width: 55%;
+        margin-left: 412px;
+        margin-bottom: 90px;
+      }
+
+      #server-responses pre {
+        margin: 0;
+        padding: 5px;
+        margin-left: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome, {{ nickname }}!</h1>
+
+    <h2 style="margin-left: 410px">Server Responses</h2>
+    <div id="server-responses">
+      {% for response in server_responses %}
+      <pre>{{ response }}</pre>
+      {% endfor %}
+    </div>
+
+    <input type="text" id="command" placeholder="Enter a command" />
+    <button id="send">Send</button>
+    <script>
+      $(document).ready(function () {
+        $("#send").click(sendMessage);
+
+        $("#command").keypress(function (e) {
+          if (e.which === 13) {
+            e.preventDefault();
+            sendMessage();
+          }
+        });
+
+        function sendMessage() {
+          var command = $("#command").val();
+          var nickname = "{{ nickname }}";
+
+          $.ajax({
+            type: "POST",
+            url: "/send_message",
+            data: {
+              message: command,
+              nickname: nickname,
+            },
+            success: function (response) {
+              var formattedMessage = "<pre>" + response.message + "</pre>";
+              $("#server-responses").append(formattedMessage);
+              $("#command").val("");
+              scrollServerResponsesToBottom();
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        }
+
+        function focusCommandInput() {
+          document.getElementById("command").focus();
+        }
+
+        // Call the focusCommandInput() function when the page finishes loading
+        window.onload = focusCommandInput;
+        // Scroll to the bottom of the server responses when the page finishes loading
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+    </script>
+  </body>
+</html>
