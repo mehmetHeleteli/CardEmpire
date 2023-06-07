@@ -45,7 +45,7 @@
         padding: 10px;
         background-color: #f5f5f5;
         border-radius: 5px;
-        max-height: auto;
+        max-height: 675px;
         overflow-y: scroll;
         width: 55%;
         margin-left: 412px;
@@ -105,14 +105,10 @@
           });
         }
 
-        function focusCommandInput() {
-          document.getElementById("command").focus();
+        function scrollServerResponsesToBottom() {
+          var serverResponses = document.getElementById("server-responses");
+          serverResponses.scrollTop = serverResponses.scrollHeight;
         }
-
-        // Call the focusCommandInput() function when the page finishes loading
-        window.onload = focusCommandInput;
-        // Scroll to the bottom of the server responses when the page finishes loading
-        window.scrollTo(0, document.body.scrollHeight);
       });
     </script>
   </body>

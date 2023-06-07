@@ -28,7 +28,6 @@ def start_game():
         player.draw()
         ai_bot.draw()
 
-
     print("Game started")
 
 
@@ -68,7 +67,7 @@ def send_message():
                 # Check if the card index is valid
                 if 0 <= card_index < len(player.hand):
                     card = player.hand[card_index]
-                    
+
                     # Check if the player has enough mana to play the card
                     if player.manapool >= card.mana:
                         # Get the name of the played card
@@ -108,7 +107,6 @@ def send_message():
                 response += response_end
         else:
             response = "Invalid command format. Please provide both card index and field index."
-
 
     elif message.lower() == "hand":
         response = "\nHand:\n"
@@ -241,15 +239,6 @@ def switch_turns():
     current_turn = 1 - current_turn  # Switch turns
 
 
-
-def ai_bot_turn():
-    global current_turn
-    global player
-    global ai_bot
-    playable_cards = []
-    response = ""
-    response_end = "\n----------------------------------------"
-
 def ai_bot_turn():
     global current_turn
     global player
@@ -259,13 +248,13 @@ def ai_bot_turn():
     response_end = "\n----------------------------------------"
 
     # Simulate AI's turn
-    while ai_bot.manapool > 0:
+    if ai_bot.manapool > 0:
         # Check cards in hand
         for card in ai_bot.hand:
             # Add playable cards to a list
             if ai_bot.manapool >= card.mana:
                 playable_cards.append(card)
-                
+
         if len(playable_cards) > 0:
             for card in playable_cards:
                 print(card.name)
@@ -273,14 +262,14 @@ def ai_bot_turn():
             response = "\nAI has no playable cards"
             switch_turns()
             print(len(playable_cards))
+            ai_bot.draw()
             return response
-        
+
         while len(playable_cards) > 0 and ai_bot.manapool > 0:
             # Get most powerful card from playable cards
             card = Game.get_most_powerful_card(playable_cards)
-            # Find index of card in playable cards
-            card_index = playable_cards.index(card)
-            # Find index of the card with lowest sum
+            # Find the index of the card in AI's hand
+            card_index = ai_bot.hand.index(card)
 
             # Check if AI has enough mana to play the card
             if ai_bot.manapool >= card.mana:
@@ -324,4 +313,4 @@ def ai_bot_turn():
 
 if __name__ == '__main__':
     start_game()
-    app.run(debug=True)
+    app.run(port=5001, debug=True)

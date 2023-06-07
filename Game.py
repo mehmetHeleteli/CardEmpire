@@ -7,17 +7,23 @@ import random
 def create_deck():
     deck = []
     for i in range(0, 10):
-        deck.append(Cards.drawable_cards[random.randint(0, len(Cards.drawable_cards) - 1)])
+        deck.append(Cards.drawable_cards[random.randint(
+            0, len(Cards.drawable_cards) - 1)])
     return deck
 
 # Create a function that shuffles a deck of cards
+
+
 def shuffle_deck(deck):
     random.shuffle(deck)
     return deck
 
 # Create a function that select a deck from a list of decks
+
+
 def select_deck_one():  # Testing
     return Cards.deckone
+
 
 def calculate_field_powers(curret_player):
     field_powers = {}
@@ -32,11 +38,9 @@ def calculate_field_powers(curret_player):
 
 def get_most_powerful_card(cardslist):
     # Find the most powerful card and return index of the card
-    most_powerful_card = cardslist[0]
     for card in cardslist:
-        if card.attack > most_powerful_card.attack:
-            most_powerful_card = card
-    return most_powerful_card
+        if card.attack == max(card.attack for card in cardslist):
+            return card
 
 
 def get_hand_card_list(player):

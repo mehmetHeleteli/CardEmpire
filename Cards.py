@@ -24,20 +24,20 @@ def nothing(fieldIndex, current_player):
     pass
 
 
-def hurrem(fieldIndex, current_player):  # NOT IMPLEMENTED
+def hurrem(fieldIndex, current_player):
 
     if fieldIndex == 0:
-        current_player.fieldOneSum += 3
-        print("3 Power added to field 1")
+        for _ in range(0, current_player.fieldCardCount[fieldIndex]):
+            current_player.fieldSum[fieldIndex] += 3
     elif fieldIndex == 1:
-        current_player.fieldTwoSum += 3
-        print("3 Power added to field 2")
+        for _ in range(0, current_player.fieldCardCount[fieldIndex]):
+            current_player.fieldSum[fieldIndex] += 3
     elif fieldIndex == 2:
-        current_player.fieldThreeSum += 3
-        print("3 Power added to field 3")
+        for _ in range(0, current_player.fieldCardCount[fieldIndex]):
+            current_player.fieldSum[fieldIndex] += 3
 
 
-def asena(fieldIndex, current_player):  # WORKS
+def asena(fieldIndex, current_player):
     current_player.manapool += 3
     print("3 Mana added")
 
