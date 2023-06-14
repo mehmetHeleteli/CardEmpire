@@ -1,33 +1,41 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 import Game
 import Player
 
 app = Flask(__name__)
+app.static_folder = 'templates/img'
 
 current_turn = 1
 global player
 global ai_bot
+cheat_enabled = False
 
 
-def start_game():
+def start_game(deck):
     global player
     global ai_bot
-    player = Player.PlayerClass('Player')
     ai_bot = Player.PlayerClass('AI')
+    player = Player.PlayerClass('Player')
 
+    deck = int(deck)
+    print(deck)
     # Create a deck for each player
-    player.deck = Game.create_deck()
-    ai_bot.deck = Game.select_deck_one()
+
+    player.deck = Game.select_deck(deck)
+    ai_bot.deck = Game.select_deck_for_ai()
+
+    for _ in player.deck:
+        print(_.name)
 
     # Shuffle each player's deck
     player.deck = Game.shuffle_deck(player.deck)
     ai_bot.deck = Game.shuffle_deck(ai_bot.deck)
 
-    # Draw 2 cards for each player
-    for i in range(0, 3):
+    for _ in range(4):
         player.draw()
-        ai_bot.draw()
 
+    for _ in range(3):
+        ai_bot.draw()
     print("Game started")
 
 
@@ -38,8 +46,12 @@ def login():
 
 @app.route('/chat', methods=['POST'])
 def chat():
+    global deck
     nickname = request.form['nickname']
-    return render_template('index.html', nickname=nickname)
+    deck = request.form['deck']
+    start_game(deck)
+
+    return render_template('index.html', nickname=nickname, deck=deck)
 
 
 @app.route('/send_message', methods=['POST'])
@@ -47,11 +59,11 @@ def send_message():
     global current_turn
     global player
     global ai_bot
+    global cheat_enabled
     message = request.form['message']
     nickname = request.form['nickname']
     response = ""
     response_end = "\n----------------------------------------"
-
     card_index = 0
     field_index = 0
 
@@ -73,7 +85,7 @@ def send_message():
                         # Get the name of the played card
                         card_name = card.name
 
-                        response = "Played %s" % card_name
+                        response = nickname + " Played %s" % card_name
                         response += response_end
 
                         # Perform the play action using the received card_index and field_index
@@ -84,7 +96,7 @@ def send_message():
                         response += "\nFields:\n"
 
                         # Print player's fields and field sums
-                        response += " Player's Fields:\n"
+                        response += nickname + "'s Fields:\n"
                         for field_index, field in enumerate(player.fields):
                             response += f"\t  Field {field_index + 1} (Field Sum: {player.fieldSum[field_index]})\n"
                             for card in field[1]:
@@ -109,16 +121,16 @@ def send_message():
             response = "Invalid command format. Please provide both card index and field index."
 
     elif message.lower() == "hand":
-        response = "\nHand:\n"
+        response = "\n" + nickname + "'s Hand:\n"
         for card_index, card in enumerate(player.hand):
-            response += f"\t{card_index + 1}. {card.name:<15} | Desc: {card.description:<10} | Mana: {card.mana:<5} | Atk: {card.attack}\n"
+            response += f"\t{card_index + 1}. {card.name:<15} | {card.description:<30} | Mana: {card.mana:<5} | Atk: {card.attack}\n"
         response += response_end
 
     elif message.lower() == "fields":
         response = "\nFields:\n"
 
         # Print player's fields and field sums
-        response += " Player's Fields:\n"
+        response += nickname + "'s Fields:\n"
         for field_index, field in enumerate(player.fields):
             response += f"\t  Field {field_index + 1} (Field Sum: {player.fieldSum[field_index]})\n"
             for card in field[1]:
@@ -134,6 +146,18 @@ def send_message():
 
     elif message.lower() == "mana":
         response = f"\nMana: {player.manapool}/{player.max_mana}"
+        response += response_end
+
+    elif message.lower() == "help":
+        response = "\nCommands:\n" \
+            "\tplay 'card_number' 'field_number' - Plays a card from hand to field\n" \
+            "\thand                              - Shows the cards in hand\n" \
+            "\tfields                            - Shows the cards in fields\n" \
+            "\tmana                              - Shows the mana pool\n" \
+            "\tend                               - Ends the turn\n" \
+            "\treset                             - Resets the game\n" \
+            "\thelp                              - Shows the commands\n"
+
         response += response_end
 
     elif message.lower() == "end":
@@ -169,18 +193,14 @@ def send_message():
                     # Writing which fields that player wins
                     response += f"\nPlayer won field {i + 1}!"
                     player_win_Counter += 1
-                    break
                 elif player.fieldSum[i] < ai_bot.fieldSum[i]:
                     # Writing which fields that AI wins
                     response += f"\nAI won field {i + 1}!"
                     ai_win_Counter += 1
-                    break
                 elif player.fieldSum[i] == ai_bot.fieldSum[i]:
                     response += f"\nField {i + 1} is a draw!"
                     ai_win_Counter += 1
                     player_win_Counter += 1
-                else:
-                    continue
 
             # If player wins more fields than AI, player wins the game
             if player_win_Counter > ai_win_Counter:
@@ -188,48 +208,79 @@ def send_message():
             # If AI wins more fields than player, AI wins the game
             elif player_win_Counter < ai_win_Counter:
                 response += "\nAI wins!"
+            # If both player and AI wins the same amount of fields, calculate the field sums
+            elif player_win_Counter == ai_win_Counter:
+                player_field_sum = 0
+                ai_field_sum = 0
+                for i in range(0, 3):
+                    player_field_sum += player.fieldSum[i]
+                    ai_field_sum += ai_bot.fieldSum[i]
+                # If player's field sum is greater than AI's field sum, player wins the game
+                if player_field_sum > ai_field_sum:
+                    response += "\nPlayer wins!"
+                # If AI's field sum is greater than player's field sum, AI wins the game
+                elif player_field_sum < ai_field_sum:
+                    response += "\nAI wins!"
+                # If both player's and AI's field sums are equal, the game is a draw
+                elif player_field_sum == ai_field_sum:
+                    response += "\nGame is a draw!"
 
-    elif message.lower() == "help":
-        response = "\nCommands:\n" \
-            "\tplay 'card_number' 'field_number' - Plays a card from hand to field\n" \
-            "\thand                             - Shows the cards in hand\n" \
-            "\tfields                           - Shows the cards in fields\n" \
-            "\tmana                             - Shows the mana pool\n" \
-            "\tend                              - Ends the turn\n" \
-            "\thelp                             - Shows the commands\n"
+            response += response_end
 
+            response += "\nGame ended."
+            response += response_end
+            return redirect('http://cardempire.me')
+
+    elif message.lower() == "cheat_enable":
+        response = "Cheat enabled"
+        cheat_enabled = True
         response += response_end
 
+    elif message.lower() == "cheat_disable":
+        response = "Cheat disabled"
+        cheat_enabled = False
+        response += response_end
+
+
 ################################### TESTIING##############################################
-    elif message.lower() == "bothand":
+    elif message.lower() == "bothand" and cheat_enabled is True:
         response = "\nHand:\n"
         for card_index, card in enumerate(ai_bot.hand):
             response += f"\t{card_index + 1}. {card.name} | Mana: {card.mana} | Attack: {card.attack}\n"
         response += response_end
 
-    elif message.lower() == "botdraw":
+    elif message.lower() == "botdraw" and cheat_enabled is True:
         response = "\nAI drew a card"
         ai_bot.draw()
         response += response_end
 
-    elif message.lower() == "botaddmana":
-        response = "\nAI added 1 mana"
+    elif message.lower() == "deck":
+        response = "\nDeck:\n"
+        for card_index, card in enumerate(player.deck):
+            response += f"\t{card_index + 1}. {card.name} | Mana: {card.mana} | Attack: {card.attack}\n"
+        response += response_end
+
+    elif message.lower() == "botaddmana" and cheat_enabled is True:
+        response = "\n1 mana added to AI"
         ai_bot.manapool += 1
         response += response_end
 
-    elif message.lower() == "draw":
-        response = "\nPlayer drew a card"
-        for i in range(0, 3):
-            player.draw()
+    elif message.lower() == "draw" and cheat_enabled is True:
+        response = "\n" + nickname + " drew a card"
+        player.draw()
         response += response_end
-    elif message.lower() == "addmana":
-        response = "\nPlayer added 1 mana"
+
+    elif message.lower() == "addmana" and cheat_enabled is True:
+        response = "\n1 mana added to " + nickname
         player.manapool += 6
-    elif message.lower() == "botmana":
+        response += response_end
+
+    elif message.lower() == "botmana" and cheat_enabled is True:
         response = f"\nAI Mana: {ai_bot.manapool}/{ai_bot.max_mana}"
 ################################### TESTIING##############################################
     else:
         response = "Invalid command"
+        response += response_end
 
     return jsonify({'message': response})
 
@@ -274,11 +325,12 @@ def ai_bot_turn():
             # Check if AI has enough mana to play the card
             if ai_bot.manapool >= card.mana:
                 # Play the card on the field with the lowest sum
-                ai_bot.play(card_index, 0)
+                field_index = Game.find_least_powerful_field(ai_bot)
+                ai_bot.play(card_index, field_index)
 
                 # Send the response to the client
                 response += "\tAI Bot played " + card.name + \
-                    " on field " + str(1) + "\n"
+                    " on field " + str(field_index + 1) + "\n"
 
                 # Update AI's mana
                 ai_bot.manapool -= card.mana
@@ -302,15 +354,12 @@ def ai_bot_turn():
                     response += f"\t  Field {field_index + 1} (Field Power: {ai_bot.fieldSum[field_index]})\n"
                     for card in field[1]:
                         response += f"\t\t{card.name} | Mana: {card.mana} | Attack: {card.attack}\n"
-                response += response_end
             else:
                 break
     switch_turns()
-    print(current_turn)
     ai_bot.draw()
     return response
 
 
 if __name__ == '__main__':
-    start_game()
     app.run(port=5001, debug=True)

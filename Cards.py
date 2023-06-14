@@ -111,7 +111,22 @@ def nasreddinHoca(fieldIndex, current_player):
 
 
 def silahdarAgasi(fieldIndex, current_player):
-    pass
+    if fieldIndex == 0:
+        for _ in current_player.fields[fieldIndex][1]:
+            print(_.name)
+            if _.mana == 1:
+                current_player.fieldSum[fieldIndex] += 2
+                print("2 Power added to field 1")
+    elif fieldIndex == 1:
+        for _ in current_player.fields[fieldIndex][1]:
+            if _.mana == 1:
+                current_player.fieldSum[fieldIndex] += 2
+                print("2 Power added to field 2")
+    elif fieldIndex == 2:
+        for _ in current_player.fields[fieldIndex][1]:
+            if _.mana == 1:
+                current_player.fieldSum[fieldIndex] += 2
+                print("2 Power added to field 3")
 
 
 def janissary(fieldIndex, current_player):
@@ -127,6 +142,30 @@ def janissary(fieldIndex, current_player):
         current_player.fieldSum[fieldIndex-1] += 2
         current_player.fieldSum[fieldIndex-2] += 2
         print("2 Power added to field 1 and 2")
+
+
+def humbaraci(fieldIndex, current_player):
+    if fieldIndex == 0:
+        current_player.fieldSum[fieldIndex] += 3
+        print("3 Power added to field 1")
+        for _ in current_player.fields[fieldIndex][1]:
+            if _.name == "Humbaraci Corps":
+                _.remove()
+                print("Humbaraci Corps removed from field 1")
+    elif fieldIndex == 1:
+        current_player.fieldSum[fieldIndex] += 3
+        print("3 Power added to field 2")
+        for _ in current_player.fields[fieldIndex][1]:
+            if _.name == "Humbaraci Corps":
+                _.remove()
+                print("Humbaraci Corps removed from field 2")
+    elif fieldIndex == 2:
+        current_player.fieldSum[fieldIndex] += 3
+        print("3 Power added to field 3")
+        for _ in current_player.fields[fieldIndex][1]:
+            if _.name == "Humbaraci Corps":
+                _.remove()
+                print("Humbaraci Corps removed from field 3")
 
 
 def dragut(fieldIndex, current_player):
@@ -169,7 +208,7 @@ def sanjar(fieldIndex, current_player):
 
 
 def hafizAhmedPasha(fieldIndex, current_player):
-    pass
+    current_player.manapool += 2
 
 
 def umur(fieldIndex, current_player):
@@ -200,17 +239,21 @@ def umur(fieldIndex, current_player):
 
 
 def mehteran(fieldIndex, current_player):
+    cardCount = 0
     if fieldIndex == 0:
-        for card in current_player.fieldCardCount[fieldIndex]:
-            current_player.fieldSum[fieldIndex] += 1
+        for _ in current_player.fieldCardCount[fieldIndex]:
+            cardCount += 1
+        current_player.fieldSum[fieldIndex] += cardCount
         print("Power added to field 1")
     elif fieldIndex == 1:
-        for card in current_player.fieldCardCount[fieldIndex]:
-            current_player.fieldSum[fieldIndex] += 1
+        for _ in current_player.fieldCardCount[fieldIndex]:
+            cardCount += 1
+        current_player.fieldSum[fieldIndex] += cardCount
         print("Power added to field 2")
     elif fieldIndex == 2:
-        for card in current_player.fieldCardCount[fieldIndex]:
-            current_player.fieldSum[fieldIndex] += 1
+        for _ in current_player.fieldCardCount[fieldIndex]:
+            cardCount += 1
+        current_player.fieldSum[fieldIndex] += cardCount
         print("Power added to field 3")
 
 
@@ -298,7 +341,15 @@ def barbaros(fieldIndex, current_player):
 
 
 def sokulluMehmed(fieldIndex, current_player):
-    pass
+    if fieldIndex == 0:
+        current_player.fieldSum[fieldIndex] += 4
+        print("4 Power added to field 1")
+    elif fieldIndex == 1:
+        current_player.fieldSum[fieldIndex] += 4
+        print("4 Power added to field 2")
+    elif fieldIndex == 2:
+        current_player.fieldSum[fieldIndex] += 4
+        print("4 Power added to field 3")
 
 
 def timar(fieldIndex, current_player):  # WORKS
@@ -401,7 +452,18 @@ def pargali(fieldIndex, current_player):
 
 
 def suleiman(fieldIndex, current_player):
-    pass
+    if fieldIndex == 0:
+        cardCount = current_player.fieldCardCount[fieldIndex]
+        current_player.fieldSum[fieldIndex] += cardCount
+        print(str(cardCount) + " Power added to field 1")
+    elif fieldIndex == 1:
+        cardCount = current_player.fieldCardCount[fieldIndex]
+        current_player.fieldSum[fieldIndex] += cardCount
+        print(str(cardCount) + " Power added to field 2")
+    elif fieldIndex == 2:
+        cardCount = current_player.fieldCardCount[fieldIndex]
+        current_player.fieldSum[fieldIndex] += cardCount
+        print(str(cardCount) + " Power added to field 3")
 
 
 def fsm(fieldIndex, current_player):
@@ -474,22 +536,34 @@ def alparslan(fieldIndex, current_player):
 
 
 def timur(fieldIndex, current_player):
-    pass
+
+    current_player.fieldSum[0] += current_player.fieldCardCount[0]
+    current_player.fieldSum[1] += current_player.fieldCardCount[1]
+    current_player.fieldSum[2] += current_player.fieldCardCount[2]
+    print("Field 1: " + str(current_player.fieldCardCount[0]) + " Power added")
+    print("Field 2: " + str(current_player.fieldCardCount[1]) + " Power added")
+    print("Field 3: " + str(current_player.fieldCardCount[2]) + " Power added")
 
 
 def atilla(fieldIndex, current_player):
     if fieldIndex == 0:
-        print("No function")
+        print("No fields on the left")
     elif fieldIndex == 1:
-        current_player.fieldSum[fieldIndex-1] += 3
+        current_player.fieldSum[fieldIndex-1] += 5
         print("3 Power added to left field")
     elif fieldIndex == 2:
-        current_player.fieldSum[fieldIndex-1] += 3
+        current_player.fieldSum[fieldIndex-1] += 5
         print("3 Power added to left field")
 
 
 def metehan(fieldIndex, current_player):
-    pass
+    if fieldIndex == 0:
+        current_player.fieldSum[fieldIndex + 1] += 5
+    elif fieldIndex == 1:
+        current_player.fieldSum[fieldIndex + 1] += 5
+        print("3 Power added to left field")
+    elif fieldIndex == 2:
+        print("No fields on the right")
 
 
 def bilgeQagan(fieldIndex, current_player):
@@ -520,7 +594,7 @@ drawable_cards.append(
 drawable_cards.append(
     Card('Janissary', 'Gives one by one P other fields', 2, 2, janissary))
 drawable_cards.append(Card('Sipahi', 'No function.', 2, 2, nothing))
-drawable_cards.append(Card('Humbaraci Corps', 'No function', 2, 4, nothing))
+drawable_cards.append(Card('Humbaraci Corps', 'No function', 2, 0, humbaraci))
 drawable_cards.append(Card('Dragut', 'Spawns 1 ship', 2, 1, dragut))
 drawable_cards.append(Card('Sanjar', 'gives +1 P other fields', 2, 3, sanjar))
 
@@ -577,9 +651,9 @@ drawable_cards.append(Card('Bumin Qaghan', 'No function.', 6, 12, nothing))
 drawable_cards.append(
     Card('Alparslan', 'Spawns army to other fields', 6, 5, alparslan))
 drawable_cards.append(
-    Card('Timur', '-1 P acoring to oppenent cards', 6, 7, timar))
-drawable_cards.append(Card('Atilla', '+9 P to left field', 6, 3, atilla))
-drawable_cards.append(Card('Metehan', 'No function.', 6, 12, metehan))
+    Card('Timur', '-1 P acoring to oppenent cards', 6, 7, timur))
+drawable_cards.append(Card('Atilla', '+9 P to left field', 6, 6, atilla))
+drawable_cards.append(Card('Metehan', 'No function.', 6, 6, metehan))
 drawable_cards.append(Card('Bilge Qaghan', 'No function.', 6, 12, bilgeQagan))
 
 # Unique Cards
@@ -589,83 +663,72 @@ undrawable_cards.append(Card('Army', 'No function.', 0, 3, nothing))
 undrawable_cards.append(Card('Donkey', 'No function.', 0, 2, nothing))
 
 # DECK ONE
-deckone.append(Card('Hurrem',
-               'Give +3 point to all cards on this field.', 0, 0, hurrem))
-deckone.append(Card('Azaps', 'No function.', 1, 2, nothing))
-deckone.append(Card('Babur', 'When played gives +1 M', 1, 3, nothing))
-deckone.append(
-    Card('Silahtar Agha', 'Gives +3P to 6 cost card', 2, 3, nothing))
-deckone.append(
-    Card('Mehteran', 'Gives + 1P each card on field', 3, 2, nothing))
-deckone.append(Card(
-    'Deliler', 'If the first card played on the field, gives 4P to field.', 3, 2, deliler))
-deckone.append(
-    Card('Katip Celebi', 'gives +2 M when played.', 3, 3, katipCelebi))
-deckone.append(Card('Piri Reis', 'Spawns 3 ship', 4, 2, nothing))
-deckone.append(Card('Aleaddin Pasha', 'No function', 5, 9, nothing))
-deckone.append(
-    Card('Timur', 'provides -1 point to each opponent cards.', 6, 7, nothing))
+deckone = [
+    drawable_cards[0],  # Hurrem
+    drawable_cards[6],  # Azaps
+    drawable_cards[8],  # Babur
+    drawable_cards[11],  # Silahtar Agha
+    drawable_cards[20],  # Mehteran
+    drawable_cards[21],  # Deliler
+    drawable_cards[23],  # Katip Celebi
+    drawable_cards[34],  # Piri Reis
+    drawable_cards[38],  # Aleaddin Pasha
+    drawable_cards[48]  # Timur
+]
+
 
 # DECK TWO
-decktwo.append(Card('Asena', 'Give +3 mana when played.', 0, 0, asena))
-decktwo.append(
-    Card('Harem', 'If there are more than 2 cards on that field +2.', 1, 2, nothing))
-decktwo.append(Card('Nasreddin', 'Spawns donkey', 1, 0, nothing))
-decktwo.append(
-    Card('Janissary', 'Gives one by one P other fields', 2, 2, nothing))
-decktwo.append(Card('Omar Khayyam', 'No function', 3, 3, nothing))
-decktwo.append(Card('Topcu', 'No function', 3, 5, nothing))
-decktwo.append(Card('Ahmed Cevdet Pasha',
-               'Gives +5 power to right of his field.', 3, -2, ahmedCevdet))
-decktwo.append(Card('Orhan Gazi', 'No function', 5, 10, nothing))
-decktwo.append(Card('Mimar Sinan', 'Spawns Topkapi', 5, 1, nothing))
-decktwo.append(Card('FSM', 'Spawns 2 army', 6, 7, nothing))
-
+decktwo = [
+    drawable_cards[1],  # Asena
+    drawable_cards[3],  # Harem
+    drawable_cards[9],  # Nasreddin
+    drawable_cards[12],  # Janissary
+    drawable_cards[18],  # Omar Khayyam
+    drawable_cards[22],  # Topcu
+    drawable_cards[24],  # Ahmed Cevdet Pasha
+    drawable_cards[43],  # Orhan Gazi
+    drawable_cards[39],  # Mimar Sinan
+    drawable_cards[45]  # FSM
+]
 
 # DECK THREE
-
-deckthree.append(Card(
-    'Hurrem', 'Give +3 point to all cards on this field.', 0, 0, hurrem))
-deckthree.append(Card('Marquee', 'No function.', 1, 2, nothing))
-deckthree.append(Card('Ket Buga', 'No function', 2, 4, nothing))
-deckthree.append(Card('Sipahi', 'No function.', 2, 2, nothing))
-deckthree.append(Card('Umur Bey', 'Spawns 2 ship', 3, 2, nothing))
-deckthree.append(Card('Tonyukuk', 'No function.', 3, 4, nothing))
-deckthree.append(Card('Sokullu Mehmed', '-4 P oppenents field', 4, 4, nothing))
-deckthree.append(Card('Hayreddin Barbarossa', 'Spawns 3 ship.', 4, 3, nothing))
-deckthree.append(Card('Mihrimah',
-                 'if the card played on first field, gives 5P.', 5, 5, nothing))
-deckthree.append(Card('Bumin Qaghan', 'No function.', 6, 12, nothing))
+deckthree = [
+    drawable_cards[0],  # Hurrem
+    drawable_cards[4],  # Marquee
+    drawable_cards[10],  # Ket Buga
+    drawable_cards[13],  # Sipahi
+    drawable_cards[19],  # Umur Bey
+    drawable_cards[26],  # Tonyukuk
+    drawable_cards[32],  # Sokullu Mehmed
+    drawable_cards[31],  # Barbarossa
+    drawable_cards[41],  # Mihrimah
+    drawable_cards[46]  # Bumin Qaghan
+]
 
 # DECK FOUR
-deckfour.append(Card('Asena', 'Give +3 mana when played.', 0, 0, asena))
-deckfour.append(Card('Lagimci', 'When played gives +1 M', 1, 2, nothing))
-deckfour.append(Card('Azaps', 'No function.', 1, 2, nothing))
-deckfour.append(Card('Turgut Reis -Dragut', 'Spawns 1 ship', 2, 1, nothing))
-deckfour.append(Card('Hafiz AHmed Pasha', 'Gives +1 Mana', 3, 4, nothing))
-deckfour.append(
-    Card('Alp Er Tunga', 'provides -3 P oppenent field.', 3, 2, nothing))
-deckfour.append(Card('Kul Tigin', '+3Mana', 4, 4, nothing))
-deckfour.append(Card('Suleiman The Magnificient',
-                '-3 P to the card oppenent field.', 5, 8, nothing))
-deckfour.append(Card('Orhan Gazi', 'No function', 5, 10, nothing))
-deckfour.append(Card('Atilla', '+9 P to left field', 6, 3, nothing))
+deckfour = [
+    drawable_cards[1],  # Asena
+    drawable_cards[5],  # Lagimci
+    drawable_cards[6],  # Azaps
+    drawable_cards[15],  # Dragut
+    drawable_cards[17],  # Hafiz Ahmed Pasha
+    drawable_cards[28],  # Alp Er Tunga
+    drawable_cards[37],  # Kul Tigin
+    drawable_cards[44],  # Suleiman The Magnificent
+    drawable_cards[43],  # Orhan Gazi
+    drawable_cards[49]  # Atilla
+]
 
 # DECK FIVE
-
-
-deckfive.append(Card('Orkhon Inscriptions',
-                'Give +1 M and +1 P when played.', 0, 0, asena))
-deckfive.append(Card('Nasreddin', 'Spawns donkey', 1, 0, nothing))
-deckfive.append(Card('Babur', 'When played gives +1 M', 1, 3, nothing))
-deckfive.append(Card('Sanjar', 'gives +1 P other fields', 2, 3, nothing))
-deckfive.append(
-    Card('Silahtar Agha', 'Gives +3P to 6 cost card', 2, 3, nothing))
-deckfive.append(
-    Card('Ibrahim The Mad', 'provides +4p other fields.', 3, -5, nothing))
-deckfive.append(Card('Timar', 'Spawns 3 sipahi', 4, 2, nothing))
-deckfive.append(Card('Pargali', '+3 Mana', 5, 7, nothing))
-deckfive.append(Card(
-    'Osman Bey', 'If the first card played on the field, gives 7P to field.', 4, 2, nothing))
-deckfive.append(
-    Card('Alparslan', 'Spawns  other fields to army ', 6, 5, nothing))
+deckfive = [
+    drawable_cards[2],  # Orkhon Inscriptions
+    drawable_cards[9],  # Nasreddin
+    drawable_cards[8],  # Babur
+    drawable_cards[16],  # Sanjar
+    drawable_cards[11],  # Silahtar Agha
+    drawable_cards[30],  # Ibrahim The Mad
+    drawable_cards[33],  # Timar
+    drawable_cards[42],  # Pargali
+    drawable_cards[40],  # Osman Bey
+    drawable_cards[47]  # Alparslan
+]

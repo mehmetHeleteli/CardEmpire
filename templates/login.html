@@ -85,7 +85,10 @@
         cursor: help;
         position: relative;
       }
-
+      #deck {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
       .deck-select label span[title]::after {
         content: "?";
         position: absolute;
@@ -157,36 +160,31 @@
 
     <form action="/chat" method="POST">
       <div class="deck-select">
-        <input type="radio" name="deck" id="deck1" value="deck1" required />
+        <input type="radio" name="deck" id="deck1" value="0" />
         <label for="deck1">
-          <span>Deck 1</span>
           <img src="img/card2.png" class="cardPhoto" />
         </label>
 
-        <input type="radio" name="deck" id="deck2" value="deck2" required />
+        <input type="radio" name="deck" id="deck2" value="1" />
         <label for="deck2">
-          <span>Deck 2</span>
           <img src="img/card2.png" class="cardPhoto" />
         </label>
 
-        <input type="radio" name="deck" id="deck3" value="deck3" />
+        <input type="radio" name="deck" id="deck3" value="2" />
         <label for="deck3">
-          <span>Deck 3</span>
           <img src="img/card2.png" class="cardPhoto" />
         </label>
 
-        <input type="radio" name="deck" id="deck4" value="deck4" />
+        <input type="radio" name="deck" id="deck4" value="3" />
         <label for="deck4">
-          <span>Deck 4</span>
           <img
             src="file:///CardEmpire/templates/img/card2.png"
             class="cardPhoto"
           />
         </label>
 
-        <input type="radio" name="deck" id="deck5" value="deck5" />
+        <input type="radio" name="deck" id="deck5" value="4" />
         <label for="deck5">
-          <span>Deck 5</span>
           <img src="img/card2.png" class="cardPhoto" />
         </label>
       </div>
