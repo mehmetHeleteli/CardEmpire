@@ -572,95 +572,97 @@ def bilgeQagan(fieldIndex, current_player):
 
 # 0 Cost Mana
 drawable_cards.append(Card('Hurrem',
-                           'Give +3 point to all cards on this field.', 0, 0, hurrem))
-drawable_cards.append(Card('Asena', 'Give +3 mana when played.', 0, 0, asena))
+                           'Give +3 point to all cards on this field', 0, 0, hurrem))
+drawable_cards.append(Card('Asena', 'Give +3 mana', 0, 0, asena))
 drawable_cards.append(Card('Orkhon Inscriptions',
-                           'Give +1 M and +1 P when played.', 0, 0, asena))
+                           'Give +1 Mama', 0, 1, asena))
 
 # 1 Cost Mana
 drawable_cards.append(
     Card('Harem', 'If there are more than 2 cards on that field +2.', 1, 2, harem))
-drawable_cards.append(Card('Marquee', 'No function.', 1, 2, nothing))
-drawable_cards.append(Card('Lagimci', 'When played gives +1 M', 1, 2, lagimci))
-drawable_cards.append(Card('Azaps', 'No function.', 1, 2, nothing))
-drawable_cards.append(Card('Ay Yiltiz', 'No function.', 1, 2, nothing))
-drawable_cards.append(Card('Babur', 'When played gives +1 M', 1, 3, babur))
+drawable_cards.append(Card('Marquee', 'No function', 1, 2, nothing))
+drawable_cards.append(Card('Lagimci', 'Gives +1 mana', 1, 2, lagimci))
+drawable_cards.append(Card('Azaps', 'No function', 1, 2, nothing))
+drawable_cards.append(Card('Ay Yiltiz', 'No function', 1, 2, nothing))
+drawable_cards.append(Card('Babur', 'Gives +1 mana', 1, 3, babur))
 drawable_cards.append(Card('Nasreddin', 'Spawns donkey', 1, 0, nasreddinHoca))
 
 # 2 Cost Mana
 drawable_cards.append(Card('Ket Buga', 'No function', 2, 4, nothing))
 drawable_cards.append(
-    Card('Silahtar Agha', 'Gives +3P to 6 cost card', 2, 3, silahdarAgasi))
+    Card('Silahtar Agha', 'Gives +2 power for each 1 mana card on the field', 2, 3, silahdarAgasi))
 drawable_cards.append(
     Card('Janissary', 'Gives one by one P other fields', 2, 2, janissary))
-drawable_cards.append(Card('Sipahi', 'No function.', 2, 2, nothing))
-drawable_cards.append(Card('Humbaraci Corps', 'No function', 2, 0, humbaraci))
+drawable_cards.append(Card('Sipahi', 'No function', 2, 2, nothing))
+drawable_cards.append(Card(
+    'Humbaraci Corps', 'Gives +3 power to field and destorys self', 2, 0, humbaraci))
 drawable_cards.append(Card('Dragut', 'Spawns 1 ship', 2, 1, dragut))
 drawable_cards.append(Card('Sanjar', 'gives +1 P other fields', 2, 3, sanjar))
 
 
 # 3 Cost Mana
 drawable_cards.append(
-    Card('Hafiz Ahmed', 'Gives +1 Mana', 3, 4, hafizAhmedPasha))
+    Card('Hafiz Ahmed', 'Gives +2 mana', 3, 4, hafizAhmedPasha))
 drawable_cards.append(Card('Omar Khayyam', 'No function', 3, 3, nothing))
 drawable_cards.append(Card('Umur Bey', 'Spawns 2 ship', 3, 2, umur))
 drawable_cards.append(Card(
-    'Mehteran', 'Gives + 1P acording to numbers of cards in field.', 3, 2, mehteran))
+    'Mehteran', 'Gives +1 Power for each on field', 3, 2, mehteran))
 drawable_cards.append(Card(
-    'Deliler', 'If the first card played on the field, gives 4P to field.', 3, 2, deliler))
+    'Deliler', 'If field is empty, gives 4P to field', 3, 2, deliler))
 drawable_cards.append(Card('Topcu', 'No function', 3, 5, nothing))
 drawable_cards.append(
-    Card('Katip Celebi', 'gives +2 mana when played.', 3, 3, katipCelebi))
+    Card('Katip Celebi', 'Gives +2 mana', 3, 3, katipCelebi))
 drawable_cards.append(Card('Ahmed Cevdet',
-                           'Gives +5 power to right of his field.', 3, -2, ahmedCevdet))
-drawable_cards.append(Card('Evliya Celebi', 'No function.', 3, 3, nothing))
-drawable_cards.append(Card('Tonyukuk', 'No function.', 3, 4, nothing))
-drawable_cards.append(Card('Mirim Celebi', 'No function.', 3, 4, nothing))
+                           'Gives +5 power to right of his field', 3, -2, ahmedCevdet))
+drawable_cards.append(Card('Evliya Celebi', 'No function', 3, 3, nothing))
+drawable_cards.append(Card('Tonyukuk', 'No function', 3, 4, nothing))
+drawable_cards.append(Card('Mirim Celebi', 'No function', 3, 4, nothing))
 drawable_cards.append(
-    Card('Alp Er Tunga', 'provides +3 P left field.', 3, 2, alpErTunga))
-drawable_cards.append(Card('Lala Mustafa', 'No function.', 3, 5, nothing))
+    Card('Alp Er Tunga', 'provides +3 P left field', 3, 2, alpErTunga))
+drawable_cards.append(Card('Lala Mustafa', 'No function', 3, 5, nothing))
 drawable_cards.append(
-    Card('Ibrahim', 'provides +4p other fields.', 3, -5, ibrahim))
+    Card('Ibrahim', 'provides +4p other fields', 3, -5, ibrahim))
 
 
 # 4 Cost Mana
-drawable_cards.append(Card('Barbarossa', 'Spawns 3 ship.', 4, 3, barbaros))
+drawable_cards.append(Card('Barbarossa', 'Spawns 3 ship', 4, 3, barbaros))
 drawable_cards.append(
-    Card('Sokullu Mehmed', '-4 P oppenents field', 4, 4, sokulluMehmed))
+    Card('Sokullu Mehmed', 'Gives +4 power to field', 4, 4, sokulluMehmed))
 drawable_cards.append(Card('Timar', 'Spawns 3 sipahi', 4, 2, timar))
 drawable_cards.append(Card('Piri Reis', 'Spawns 3 ship', 4, 2, piriReis))
-drawable_cards.append(Card('Ummuhan', '+2 Mana.', 4, 6, ummuhan))
-drawable_cards.append(Card('Kosem', 'No function.', 4, 8, nothing))
-drawable_cards.append(Card('Kul Tigin', '+3 Mana', 4, 4, kultigun))
+drawable_cards.append(Card('Ummuhan', '+2 Mana', 4, 6, ummuhan))
+drawable_cards.append(Card('Kosem', 'No function', 4, 8, nothing))
+drawable_cards.append(Card('Kul Tigin', 'Gives +3 mana', 4, 4, kultigun))
 
 # 5 Cost Mana
 drawable_cards.append(Card('Aleaddin', 'No function', 5, 9, nothing))
 drawable_cards.append(Card('Mimar Sinan', 'Spawns Topkapi', 5, 1, mimarSinan))
 drawable_cards.append(Card(
-    'Osman', 'If the first card played on the field, gives 7P to field.', 5, 2, osman))
+    'Osman', 'If field is empty, gives 7P to field', 5, 2, osman))
 drawable_cards.append(
-    Card('Mihrimah', 'if the card played on first field, gives 5P.', 5, 5, mihrimah))
+    Card('Mihrimah', 'If field is empty, gives 5 power', 5, 5, mihrimah))
 drawable_cards.append(Card('Pargali', '+3 Mana', 5, 7, pargali))
 drawable_cards.append(Card('Orhan Gazi', 'No function', 5, 10, nothing))
 drawable_cards.append(
-    Card('Suleiman', '-3 P to the card oppenent field.', 5, 8, suleiman))
+    Card('Suleiman', 'Gives +4 power for each card on field', 5, 8, suleiman))
 
 # 6 Cost Mana
 drawable_cards.append(Card('FSM', 'Spawns 2 army', 6, 7, fsm))
-drawable_cards.append(Card('Bumin Qaghan', 'No function.', 6, 12, nothing))
+drawable_cards.append(Card('Bumin Qaghan', 'No function', 6, 12, nothing))
 drawable_cards.append(
-    Card('Alparslan', 'Spawns army to other fields', 6, 5, alparslan))
+    Card('Alparslan', 'Spawns army to other fields', 6, 3, alparslan))
 drawable_cards.append(
-    Card('Timur', '-1 P acoring to oppenent cards', 6, 7, timur))
-drawable_cards.append(Card('Atilla', '+9 P to left field', 6, 6, atilla))
-drawable_cards.append(Card('Metehan', 'No function.', 6, 6, metehan))
-drawable_cards.append(Card('Bilge Qaghan', 'No function.', 6, 12, bilgeQagan))
+    Card('Timur', 'Gives +1 power for each cards on every field', 6, 9, timur))
+drawable_cards.append(Card('Atilla', '+5 power to left field', 6, 6, atilla))
+drawable_cards.append(
+    Card('Metehan', '+5 power to right field', 6, 6, metehan))
+drawable_cards.append(Card('Bilge Qaghan', 'No function', 6, 12, bilgeQagan))
 
 # Unique Cards
-undrawable_cards.append(Card('Topkapi Palace', 'No function.', 0, 8, nothing))
-undrawable_cards.append(Card('Ship', 'No function.', 0, 2, nothing))
-undrawable_cards.append(Card('Army', 'No function.', 0, 3, nothing))
-undrawable_cards.append(Card('Donkey', 'No function.', 0, 2, nothing))
+undrawable_cards.append(Card('Topkapi Palace', 'No function', 0, 8, nothing))
+undrawable_cards.append(Card('Ship', 'No function', 0, 2, nothing))
+undrawable_cards.append(Card('Army', 'No function', 0, 3, nothing))
+undrawable_cards.append(Card('Donkey', 'No function', 0, 2, nothing))
 
 # DECK ONE
 deckone = [

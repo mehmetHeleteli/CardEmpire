@@ -2,8 +2,7 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 import Game
 import Player
 
-app = Flask(__name__)
-app.static_folder = 'templates/img'
+app = Flask(__name__, static_folder='F:\\CardEmpire\\templates\\static')
 
 current_turn = 1
 global player
@@ -66,6 +65,10 @@ def send_message():
     response_end = "\n----------------------------------------"
     card_index = 0
     field_index = 0
+
+    if player.manapool == 7:
+        # Do not take any input from the player
+        return jsonify({'response': "Game over. please go back to the main menu to start a new game."})
 
     # Perform actions based on the command
     if message.lower().startswith("play "):
@@ -229,7 +232,6 @@ def send_message():
 
             response += "\nGame ended."
             response += response_end
-            return redirect('http://cardempire.me')
 
     elif message.lower() == "cheat_enable":
         response = "Cheat enabled"

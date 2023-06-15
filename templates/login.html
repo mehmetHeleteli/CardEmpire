@@ -14,7 +14,7 @@
       }
 
       form {
-        margin-top: 50px;
+        margin-top: auto;
       }
 
       .deck-select {
@@ -22,19 +22,19 @@
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 25px;
       }
 
       .deck-select label {
         display: block;
-        width: 100px;
-        height: 150px;
+        width: 150px;
+        height: 225px;
         border: 2px solid #ccc;
-        border-radius: 5px;
+        border-radius: 1px;
         background-color: #fff;
         cursor: pointer;
-        padding: 10px;
-        text-align: left;
+        text-align: center;
+        margin-top: 30px;
       }
 
       .deck-select input[type="radio"] {
@@ -76,6 +76,7 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        margin-top: auto;
       }
 
       input[type="submit"]:hover {
@@ -85,10 +86,7 @@
         cursor: help;
         position: relative;
       }
-      #deck {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
+
       .deck-select label span[title]::after {
         content: "?";
         position: absolute;
@@ -105,8 +103,8 @@
       }
 
       .cardPhoto {
-        width: auto;
-        height: auto;
+        width: 150px;
+        height: 225px;
       }
 
       /* Styling for the popup */
@@ -149,7 +147,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.6);
+        background-color: rgba(112, 112, 112, 0.6);
         backdrop-filter: blur(8px);
         z-index: 9998;
       }
@@ -162,30 +160,47 @@
       <div class="deck-select">
         <input type="radio" name="deck" id="deck1" value="0" />
         <label for="deck1">
-          <img src="img/card2.png" class="cardPhoto" />
+          <img
+            src="{{ url_for('static', filename='Deck1-Card.png') }}"
+            class="cardPhoto"
+            onclick="openPopup('deck1-popup')"
+          />
         </label>
 
         <input type="radio" name="deck" id="deck2" value="1" />
         <label for="deck2">
-          <img src="img/card2.png" class="cardPhoto" />
+          <img
+            src="{{ url_for('static', filename='Deck2-Card.png') }}"
+            class="cardPhoto"
+            onclick="openPopup('deck2-popup')"
+          />
         </label>
 
         <input type="radio" name="deck" id="deck3" value="2" />
         <label for="deck3">
-          <img src="img/card2.png" class="cardPhoto" />
+          <img
+            src="{{ url_for('static', filename='Deck3-Card.png') }}"
+            class="cardPhoto"
+            onclick="openPopup('deck3-popup')"
+          />
         </label>
 
         <input type="radio" name="deck" id="deck4" value="3" />
         <label for="deck4">
           <img
-            src="file:///CardEmpire/templates/img/card2.png"
+            src="{{ url_for('static', filename='Deck4-Card.png') }}"
             class="cardPhoto"
+            onclick="openPopup('deck4-popup')"
           />
         </label>
 
         <input type="radio" name="deck" id="deck5" value="4" />
         <label for="deck5">
-          <img src="img/card2.png" class="cardPhoto" />
+          <img
+            src="{{ url_for('static', filename='Deck5-Card.png') }}"
+            class="cardPhoto"
+            onclick="openPopup('deck5-popup')"
+          />
         </label>
       </div>
       <br /><br />
@@ -197,7 +212,7 @@
         required
       />
       <br /><br />
-      <input type="submit" value="Start Chatting" />
+      <input type="submit" value="Start Game" />
     </form>
 
     <!-- Popup content for each deck -->
@@ -413,7 +428,7 @@
     <script>
       // Function to open the popup
       function openPopup(popupId) {
-        var popup = document.getElementById(popupId);
+        document.getElementById(popupId).style.display = "block";
         var overlay = document.createElement("div");
         overlay.className = "popup-overlay";
         overlay.id = "popup-overlay";
