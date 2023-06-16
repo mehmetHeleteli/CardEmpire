@@ -72,5 +72,6 @@ The Card Game is released under the [MIT License](LICENSE).
 ### Credits
 https://github.com/Batuozturkk
 Batuhan Öztürk
+
 https://github.com/cagatayokemefe
 Çağatay Ökemefe
